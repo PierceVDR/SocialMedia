@@ -1,0 +1,14 @@
+h1 {
+    text-align: center;
+    font-size: 40px;
+}
+
+#mediaPage {
+    display: grid;
+}
+
+.box {
+    grid-column: 1;
+    border: 1px;
+    border-color: blue;
+}

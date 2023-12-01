@@ -21,7 +21,7 @@ function fillPage(obj) {
     const box = document.createElement("div");
     box.className="box";
 
-    make("h4", msg["userId"], box)
+    make("h4", "User #"+msg["userId"], box)
     make("h3", msg["title"], box)
     make("p", msg["body"], box)
 

@@ -1,33 +1,38 @@
-async function getMessages() { // Retrieves the JSON for the messages and then puts them on the page
-  const url =
-    "https://jsonplaceholder.typicode.com/posts";
-  const request = new Request(url);
+var x = [];
+var y = [];
 
-  const response = await fetch(request);
-  const messages = await response.json();
+async function getData() {
+  const response = await fetch("ZoAnn.csv");
+  const data = await response.text();
+  const rows = data.split("\n").slice(1);
 
-  fillPage(messages);
+  x = rows.map( r => r.split(",")[0] );
+  y = rows.map( r => r.split(",")[1] );
 }
 
-function make(type, content, parent) { // Create the HTML for a component of a single message
-    const element = document.createElement(type);
-    element.innerHTML=content;
-    parent.append(element);
+
+
+async function displayData() {
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: x,
+      datasets: [{
+        data: y,
+        borderWidth: 3
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: false
+        }
+      }
+    }
+  });
 }
 
-function fillPage(obj) { // Takes the JSON and puts them on the page
-
-  for (const msg of obj) {
-    const box = document.createElement("div");
-    box.className="box";
-
-    // Make the individual HTML elements that'll go in the message
-    make("h4", "User #"+msg["userId"], box)
-    make("h3", msg["title"], box)
-    make("p", msg["body"], box)
-
-    mediaPage.append(box) // Add that message to the page
-  }
-}
-
-getMessages();
+getData();
+displayData();
